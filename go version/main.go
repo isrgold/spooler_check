@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/smtp"
 	"os"
@@ -117,7 +116,7 @@ func stopSpooler() bool {
 }
 
 func getCurrentJobs() []string {
-	files, err := ioutil.ReadDir(spoolerDir)
+	files, err := os.ReadDir(spoolerDir)
 	if err != nil {
 		logger.Printf("Error accessing spooler directory: %v", err)
 		return []string{}
@@ -134,7 +133,7 @@ func getCurrentJobs() []string {
 }
 
 func readPersistentJobs() []string {
-	data, err := ioutil.ReadFile(persistentJobsFile)
+	data, err := os.ReadFile(persistentJobsFile)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			logger.Printf("Error reading persistent jobs file: %v", err)
@@ -147,7 +146,7 @@ func readPersistentJobs() []string {
 
 func writePersistentJobs(jobs []string) {
 	data := strings.Join(jobs, "\n")
-	err := ioutil.WriteFile(persistentJobsFile, []byte(data), 0644)
+	err := os.WriteFile(persistentJobsFile, []byte(data), 0644)
 	if err != nil {
 		logger.Printf("Error writing to persistent jobs file: %v", err)
 	}
