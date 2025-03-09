@@ -1,0 +1,4 @@
+pip install pywin32
+pip install pyinstaller
+pyinstaller --onefile --hidden-import win32timezone print_spooler_monitor.py
+print_spooler_monitor.exe --setup

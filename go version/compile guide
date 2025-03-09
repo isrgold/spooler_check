@@ -1,0 +1,4 @@
+go mod init
+go mod tidy
+go build -o PrintSpoolerMonitor.exe
+PrintSpoolerMonitor.exe --setup
