@@ -11,7 +11,7 @@ func main() {
 	// Define the registry path
 	keyPath := `Software\Microsoft\Windows\CurrentVersion\Policies\System`
 	valueName := "Shell"
-	appPath := `C:\Path\To\YourApp.exe` // Change this to your app's path
+	appPath := `C:\Program Files\Google\Chrome\Application\chrome.exe` // Change this to your app's path
 
 	// Open or create the registry key
 	key, _, err := registry.CreateKey(registry.CURRENT_USER, keyPath, registry.SET_VALUE)
