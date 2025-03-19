@@ -1,7 +1,7 @@
 const { Command } = window.__TAURI__.shell;
 
 async function run_script() {
-  let result = await Command.create('exec-cscript').execute();
+  await Command.create('exec-cscript').execute();
 }
 
 window.addEventListener("DOMContentLoaded", () => {
