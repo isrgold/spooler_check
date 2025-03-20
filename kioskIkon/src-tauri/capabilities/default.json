@@ -18,6 +18,10 @@
           "args": [
             "C:\\ikon\\ikon_pos.vbs"
           ]
+        },
+        {
+          "name": "start-explorer",
+          "cmd": "explorer.exe"
         }
       ]
     }
