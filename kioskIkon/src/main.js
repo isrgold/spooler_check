@@ -1,12 +1,15 @@
 const { Command } = window.__TAURI__.shell;
-const  { invoke }  = window.__TAURI__.core;
+const { invoke } = window.__TAURI__.core;
 
 async function getRegistryValue() {
   try {
-    const value = await invoke('get_registry_value');
-    console.log('Registry value:', value); // You can process the result here
+    const value = await invoke('get_registry_value'); // Invoke the backend function
+    // Display the result in the HTML
+    // document.getElementById('registry-result').innerText = `Registry Value: ${value}`;
   } catch (error) {
-    console.error('Failed to get registry value:', error);
+    // console.error('Failed to get registry value:', error);
+    // Display error message in the HTML
+    document.getElementById('registry-result').innerText = `Error: ${error}`;
   }
 }
 
@@ -24,7 +27,7 @@ const correctSequence = ["F5", "1", "2"]; // Define the required sequence
 let inputSequence = [];
 
 document.addEventListener("keydown", function (event) {
-  // event.preventDefault(); // Prevent default key actions
+  event.preventDefault(); // Prevent default key actions
   if (event.key === correctSequence[inputSequence.length]) {
     inputSequence.push(event.key); // Add key to sequence
     if (inputSequence.length === correctSequence.length) {
@@ -39,7 +42,7 @@ document.addEventListener("keydown", function (event) {
 window.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
-  // document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
   run_script();
-  // getRegistryValue();
+  getRegistryValue();
 });
