@@ -23,6 +23,11 @@ async function start_explore() {
   console.log(res);
 }
 
+async function logout() {
+  const res = await Command.create('logout').execute();
+  console.log(res);
+}
+
 const correctSequence = ["F5", "1", "2"]; // Define the required sequence
 let inputSequence = [];
 
@@ -42,7 +47,9 @@ document.addEventListener("keydown", function (event) {
 window.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  const out = document.getElementById('logout');
+  out.addEventListener('click', logout);
+  // document.addEventListener('contextmenu', (e) => e.preventDefault());
   run_script();
   getRegistryValue();
 });
