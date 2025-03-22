@@ -1,56 +1,22 @@
-use std::process::Command;
+use winreg::RegKey;
+use winreg::enums::*;
 
 #[tauri::command]
 fn get_registry_value() -> Result<String, String> {
-    // PowerShell script to get the registry value first
-    let reg_script = r#"
-        $regPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System';
-        $regKey = 'Shell';
-        if (Test-Path $regPath) {
-            $value = Get-ItemProperty -Path $regPath -Name $regKey -ErrorAction SilentlyContinue;
-            if ($null -ne $value) {
-                return $value.Shell;
-            } else {
-                return "Key not found";
-            }
-        } else {
-            return "Registry path not found";
-        }
-    "#;
+    // Define the registry path and key
+    let reg_path = r"Software\Microsoft\Windows\CurrentVersion\Policies\System";
+    let reg_key = "Shell";
 
-    // Run the registry check script
-    match run_powershell_script(reg_script) {
-        Ok(reg_result) => {
-            // Return the registry value if found, or an error message if not
-            if reg_result.trim() == "Key not found" || reg_result.trim() == "Registry path not found" {
-                Err(reg_result.trim().to_string()) // If not found, return the appropriate message
-            } else {
-                Ok(reg_result.trim().to_string()) // Return the registry value
+    // Open the registry key
+    match RegKey::predef(HKEY_CURRENT_USER).open_subkey_with_flags(reg_path, KEY_READ) {
+        Ok(key) => {
+            // Try to get the value of the "Shell" key
+            match key.get_value::<String, _>(reg_key) {
+                Ok(value) => Ok(value),
+                Err(_) => Err("Key not found".to_string()),
             }
         }
-        Err(err) => Err(format!("Failed to execute PowerShell for registry: {}", err)),
-    }
-}
-
-// Function to run a PowerShell script and return the result
-fn run_powershell_script(script: &str) -> Result<String, String> {
-    let output = Command::new("powershell")
-        .arg("-ExecutionPolicy")
-        .arg("Bypass")
-        .arg("-NoProfile")
-        .arg("-Command")
-        .arg(script)
-        .output();
-
-    match output {
-        Ok(output) => {
-            if output.status.success() {
-                Ok(String::from_utf8_lossy(&output.stdout).to_string())
-            } else {
-                Err(format!("PowerShell error: {}", String::from_utf8_lossy(&output.stderr)))
-            }
-        }
-        Err(err) => Err(format!("Failed to execute PowerShell script: {}", err)),
+        Err(_) => Err("Registry path not found".to_string()),
     }
 }
 
