@@ -1,37 +1,22 @@
-use std::process::{Command};
+use winreg::RegKey;
+use winreg::enums::*;
 
 #[tauri::command]
 fn get_registry_value() -> Result<String, String> {
-    // PowerShell script to get the registry value
-    let script = r#"
-        $regPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System';
-        if (!(Test-Path $regPath)) {
-            New-Item -Path $regPath -Force;
-        }
-        Set-ItemProperty -Path $regPath -Name 'Shell' -Value 'C:\Program Files\Google\Chrome\Application\chrome.exe';
-    "#;
+    // Define the registry path and key
+    let reg_path = r"Software\Microsoft\Windows\CurrentVersion\Policies\System";
+    let reg_key = "Shell";
 
-    let output = Command::new("powershell")
-        .arg("-ExecutionPolicy")
-        .arg("Bypass")
-        .arg("-NoProfile")
-        .arg("-Command")
-        .arg(script)
-        .output();
-
-    match output {
-        Ok(output) => {
-            if output.status.success() {
-                let result = String::from_utf8_lossy(&output.stdout).to_string();
-                Ok(result.trim().to_string())
-            } else {
-                Err(format!(
-                    "PowerShell error: {}",
-                    String::from_utf8_lossy(&output.stderr)
-                ))
+    // Open the registry key
+    match RegKey::predef(HKEY_CURRENT_USER).open_subkey_with_flags(reg_path, KEY_READ) {
+        Ok(key) => {
+            // Try to get the value of the "Shell" key
+            match key.get_value::<String, _>(reg_key) {
+                Ok(value) => Ok(value),
+                Err(_) => Err("Key not found".to_string()),
             }
         }
-        Err(err) => Err(format!("Failed to execute PowerShell: {}", err)),
+        Err(_) => Err("Registry path not found".to_string()),
     }
 }
 
