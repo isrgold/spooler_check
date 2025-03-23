@@ -18,19 +18,47 @@ fn is_admin() -> bool {
 
 #[tauri::command]
 fn request_admin() {
-    let _ = Command::new("powershell")
+    // Get current executable path
+    let exe_path = std::env::current_exe()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .to_string();
+
+    let output = Command::new("powershell")
         .args(&[
             "Start-Process",
-            // "-WindowStyle",
-            // // "Hidden", // Prevents the console window from appearing
+            "-WindowStyle",
+            "Hidden", // Prevents the console window from appearing
             "-Verb",
             "RunAs",
             "-FilePath",
-            std::env::current_exe().unwrap().to_str().unwrap(),
+            &exe_path,
             "-ArgumentList",
             "--install",
         ])
-        .spawn();
+        .output();
+    if output.unwrap().status.success() {
+        // Access the registry root for HKCU
+        let reg_key = RegKey::predef(HKEY_CURRENT_USER);
+
+        // Path to the registry key
+        let path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
+
+        // Try to open the registry path or create it if it doesn't exist
+        let system_key = match reg_key.open_subkey_with_flags(path, KEY_WRITE) {
+            Ok(key) => key,
+            Err(_) => {
+                // If the path doesn't exist, create it
+                let (key, _) = reg_key.create_subkey(path).unwrap();
+                key
+            }
+        };
+
+        // Set the 'Shell' value to the current executable path
+        system_key.set_value("Shell", &exe_path).unwrap();
+        std::process::exit(0);
+    }
 }
 
 #[tauri::command]
@@ -39,7 +67,7 @@ fn get_registry_value() -> Result<String, String> {
         return Err("Administrator user".to_string());
     };
     // Define the registry path and key
-    let reg_path = r"Software\Microsoft\Windows\CurrentVersion\Policies\System";
+    let reg_path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
     let reg_key = "Shell";
 
     // Open the registry key
