@@ -19,6 +19,7 @@ async function run_script() {
 }
 
 async function start_explore() {
+  await invoke('request_admin');
   const res = await Command.create('start-explorer').execute();
   console.log(res);
 }
@@ -50,6 +51,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const out = document.getElementById('logout');
   out.addEventListener('click', logout);
   // document.addEventListener('contextmenu', (e) => e.preventDefault());
+  // invoke('request_admin');
   run_script();
   getRegistryValue();
 });

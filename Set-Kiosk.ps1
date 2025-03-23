@@ -14,10 +14,10 @@ Set-ItemProperty -Path $regPath -Name "Shell" -Value "C:\Path\To\YourApp.exe"
 # Start-Process explorer
 
 # to run from CMD:
-# powershell -ExecutionPolicy Bypass -NoProfile -Command "& { 
-#     $regPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System'; 
-#     if (!(Test-Path $regPath)) { 
-#         New-Item -Path $regPath -Force 
-#     }
-#     Set-ItemProperty -Path $regPath -Name 'Shell' -Value 'C:\Path\To\YourApp.exe' 
-# }"
+powershell -ExecutionPolicy Bypass -NoProfile -Command "& { 
+    $regPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System'; 
+    if (!(Test-Path $regPath)) { 
+        New-Item -Path $regPath -Force 
+    }
+    Set-ItemProperty -Path $regPath -Name 'Shell' -Value 'C:\Path\To\YourApp.exe' 
+}"
