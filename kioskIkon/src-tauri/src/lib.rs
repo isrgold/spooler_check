@@ -17,8 +17,8 @@ fn is_admin() -> bool {
 }
 
 #[tauri::command]
-fn request_admin() {
-    // Get current executable path
+fn request_admin(action: String) {
+    println!("{}", action);
     let exe_path = std::env::current_exe()
         .unwrap()
         .to_str()
@@ -57,13 +57,13 @@ fn request_admin() {
 
         // Set the 'Shell' value to the current executable path
         system_key.set_value("Shell", &exe_path).unwrap();
-        std::process::exit(0);
     }
 }
 
 #[tauri::command]
 fn get_registry_value() -> Result<String, String> {
     if is_admin() {
+        println!("Administrator user");
         return Err("Administrator user".to_string());
     };
     // Define the registry path and key

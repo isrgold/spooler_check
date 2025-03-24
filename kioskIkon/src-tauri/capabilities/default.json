@@ -6,6 +6,7 @@
     "main"
   ],
   "permissions": [
+    "core:app:allow-default-window-icon",
     "core:default",
     "opener:default",
     "shell:default",
