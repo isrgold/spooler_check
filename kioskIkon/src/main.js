@@ -1,31 +1,21 @@
 const { Command } = window.__TAURI__.shell;
 const { invoke } = window.__TAURI__.core;
-const { TrayIcon } = window.__TAURI__.tray;
-const { defaultWindowIcon } = window.__TAURI__.app;
-
-async function tray() {
-  const options = {
-    icon: await defaultWindowIcon(),
-  };
-  
-  const tray = await TrayIcon.new(options);
-}
+import { createTray } from './tray.js';
 
 async function getRegistryValue() {
+  createTray();
   try {
-    const value = await invoke('get_registry_value'); // Invoke the backend function
-    console.log(value);
+    await invoke('get_registry_value'); // Invoke the backend function
     run_script();
   } catch (error) {
     // console.error(error);
     if (error === "Administrator user") {
-      invoke('request_admin', {action: "install"} );
       document.getElementById('registry-result').innerText = `Error: ${error}`
     } else {
       document.getElementById('registry-result').innerHTML = `Error: ${error} <a href="#" id="install">Install kiosk mode</a>`;
       document.getElementById("install").addEventListener("click", function (event) {
         event.preventDefault();
-        invoke('request_admin');
+        invoke('request_admin', { action: "install" });
       });
     }
   }
@@ -71,7 +61,6 @@ window.addEventListener("DOMContentLoaded", () => {
   icon.addEventListener('click', run_script);
   const out = document.getElementById('logout');
   out.addEventListener('click', logout);
-  // document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
   getRegistryValue();
-  tray();
 });

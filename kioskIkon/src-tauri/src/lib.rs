@@ -18,7 +18,6 @@ fn is_admin() -> bool {
 
 #[tauri::command]
 fn request_admin(action: String) {
-    println!("{}", action);
     let exe_path = std::env::current_exe()
         .unwrap()
         .to_str()
@@ -43,7 +42,7 @@ fn request_admin(action: String) {
         let reg_key = RegKey::predef(HKEY_CURRENT_USER);
 
         // Path to the registry key
-        let path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
+        let path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";       
 
         // Try to open the registry path or create it if it doesn't exist
         let system_key = match reg_key.open_subkey_with_flags(path, KEY_WRITE) {
@@ -55,15 +54,17 @@ fn request_admin(action: String) {
             }
         };
 
-        // Set the 'Shell' value to the current executable path
-        system_key.set_value("Shell", &exe_path).unwrap();
+        if action == "uninstall" {
+            let _ = system_key.delete_value("Shell").unwrap();
+        } else {
+            system_key.set_value("Shell", &exe_path).unwrap();
+        }
     }
 }
 
 #[tauri::command]
 fn get_registry_value() -> Result<String, String> {
     if is_admin() {
-        println!("Administrator user");
         return Err("Administrator user".to_string());
     };
     // Define the registry path and key
