@@ -1,24 +1,40 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kiosk</title>
+  <title>Ikon Kiosk</title>
+  <link href="./output.css" rel="stylesheet">
   <script type="module" src="/main.js" defer></script>
 </head>
-
-<body style="background-color: #1d1b1b;">
-  <main class="container">
-    <img id="icon" src="assets/ikon_pos.ico" alt="Ikon pos" width="50" height="50"
-      style="cursor: pointer; user-select: none;" title="Ikon POS" />
-    <p style="background-color: beige;" id="registry-result"></p>
+<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex flex-col justify-between">
+  <main class="container mx-auto px-4 py-8 flex flex-col items-center justify-center flex-grow">
+    <div class="bg-gray-800 bg-opacity-50 rounded-xl shadow-2xl p-6 text-center w-full max-w-md">
+      <img 
+        id="icon" 
+        src="assets/ikon_pos.ico" 
+        alt="Ikon POS" 
+        class="mx-auto mb-4 w-16 h-16 hover:scale-110 transition-transform duration-300 cursor-pointer"
+        title="Ikon POS"
+      />
+      <p 
+        id="registry-result" 
+        class="text-white bg-gray-700 rounded-lg px-4 py-2 mt-4 shadow-md"
+      ></p>
+    </div>
   </main>
-  <footer style="position: fixed; bottom: 0; width: 100%; color: beige; text-align: center;">
-    <img id="logout" src="assets/log-out.svg" alt="logout" width="35" height="35"
-      style="position: fixed; left: 5px; cursor: pointer; user-select: none;" title="Log out" />
-    <p>&copy; 2025 Ikon</p>
+
+  <footer class="bg-gray-800 bg-opacity-30 py-4 px-6">
+    <div class="container mx-auto flex items-center justify-between">
+      <img 
+        id="logout" 
+        src="assets/log-out.svg" 
+        alt="logout" 
+        class="w-10 h-10 hover:bg-gray-700 rounded-full p-2 transition-colors duration-300 cursor-pointer"
+        title="Log out"
+      />
+      <p class="text-gray-300 text-sm">&copy; 2025 Ikon</p>
+    </div>
   </footer>
 </body>
-
 </html>
