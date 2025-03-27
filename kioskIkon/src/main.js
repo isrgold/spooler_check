@@ -1,7 +1,8 @@
 const { Command } = window.__TAURI__.shell;
 const { invoke } = window.__TAURI__.core;
 import { createTray } from './tray.js';
-import { handleLogout} from './logout.js';
+import { handleLogout } from './logout.js';
+import { listen_explorer } from './openShell.js';
 
 async function getRegistryValue() {
   try {
@@ -27,36 +28,12 @@ async function run_script() {
   console.log(res);
 }
 
-async function start_explore() {
-  const res = await Command.create('start-explorer').execute();
-  console.log(res);
-}
-
-const correctSequence = ["F5", "1", "2"]; // Define the required sequence
-let inputSequence = [];
-
-document.addEventListener("keydown", function (event) {
-  event.preventDefault(); // Prevent default key actions
-  if (event.key === correctSequence[inputSequence.length]) {
-    inputSequence.push(event.key); // Add key to sequence
-    if (inputSequence.length === correctSequence.length) {
-      console.log(inputSequence);
-      start_explore();
-      inputSequence = []; // Reset after success
-    }
-  } else {
-    inputSequence = []; // Reset on wrong input
-    if (event.key === correctSequence[inputSequence.length]) {
-      inputSequence.push(event.key);
-    }
-  }
-});
-
 window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
+  getRegistryValue();
+  listen_explorer();
   const out = document.getElementById('logout');
   out.addEventListener('click', handleLogout);
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-  getRegistryValue();
 });

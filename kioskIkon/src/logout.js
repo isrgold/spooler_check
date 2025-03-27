@@ -1,3 +1,5 @@
+const { Command } = window.__TAURI__.shell;
+
 function showConfirmationModal() {
     return new Promise((resolve) => {
         let isConfirmed = false;
