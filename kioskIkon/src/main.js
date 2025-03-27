@@ -1,12 +1,13 @@
 const { Command } = window.__TAURI__.shell;
 const { invoke } = window.__TAURI__.core;
 import { createTray } from './tray.js';
+import { handleLogout} from './logout.js';
 
 async function getRegistryValue() {
-  createTray();
   try {
     await invoke('get_registry_value'); // Invoke the backend function
     run_script();
+    createTray();
   } catch (error) {
     // console.error(error);
     if (error === "Administrator user") {
@@ -28,11 +29,6 @@ async function run_script() {
 
 async function start_explore() {
   const res = await Command.create('start-explorer').execute();
-  console.log(res);
-}
-
-async function logout() {
-  const res = await Command.create('logout').execute();
   console.log(res);
 }
 
@@ -60,7 +56,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
   const out = document.getElementById('logout');
-  out.addEventListener('click', logout);
+  out.addEventListener('click', handleLogout);
   document.addEventListener('contextmenu', (e) => e.preventDefault());
   getRegistryValue();
 });
