@@ -12,7 +12,7 @@
 
 <body class="select-none">
   <div id="confirmModal" class="hidden fixed inset-0 bg-opacity-50 z-50 ">
-    <div class="fixed bottom-20 left-4 bg-gray-800 bg-opacity-50 rounded-xl shadow-2xl p-6 w-auto max-w-md">
+    <div class="fixed bottom-18 left-4 bg-gray-800 bg-opacity-50 rounded-xl shadow-2xl p-6 w-auto max-w-md">
       <p class="text-white mb-6">
         Are you sure you want to log out?
       </p>
@@ -26,29 +26,25 @@
       </div>
     </div>
   </div>
-  <div class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex flex-col justify-between">
-
-    <main class="container mx-auto px-4 py-8 flex flex-col items-center justify-center flex-grow">
-      <div class="bg-gray-800 bg-opacity-50 rounded-xl shadow-2xl p-6 text-center w-full max-w-md">
-        <img id="icon" src="assets/ikon_pos.ico" alt="Ikon POS"
-          class="mx-auto mb-1 w-16 h-16 hover:scale-110 transition-transform duration-300 cursor-pointer" />
-        <p class="text-white">Open Ikon</p>
-        <p id="registry-result" class="text-white bg-gray-700 rounded-lg px-4 py-2 mt-4 shadow-md">
-        </p>
-      </div>
-    </main>
+  <main class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex flex-col justify-between">
+    <div class="w-14 mt-4 ml-4 flex flex-col justify-center text-center">
+      <img id="icon" src="assets/ikon_pos.ico" alt="Ikon POS"
+        class="mb-1.5 w-14 h-14 hover:scale-105 transition-transform duration-300 cursor-pointer" />
+      <p class="text-white text-xs">Open Ikon</p>
+    </div>
 
     <footer class="bg-gray-800 bg-opacity-30 ">
-      <div class=" mx-6 flex items-center justify-between h-16">
+      <div class=" mx-4 flex items-center justify-between h-12.5">
         <div id="logout"
           class="flex space-x-1 items-center h-10 hover:bg-gray-700 rounded-full p-2 transition-colors duration-300 cursor-pointer">
           <p class="text-gray-300 text-sm">Log out</p>
           <img src="assets/log-out.svg" alt="logout" title="Log out" />
         </div>
+        <p id="registry-result" class="text-white bg-gray-700 rounded-lg px-4 py-2 shadow-md"></p>
         <p class="text-gray-300 text-sm">&copy; 2025 Ikon kiosk mode</p>
       </div>
     </footer>
-  </div>
+  </main>
 </body>
 
 </html>
