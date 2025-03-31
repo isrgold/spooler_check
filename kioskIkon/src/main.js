@@ -29,7 +29,7 @@ async function run_script() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  // document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
   getRegistryValue();
