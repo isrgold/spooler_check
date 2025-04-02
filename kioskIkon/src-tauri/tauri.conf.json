@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "identifier": "com.kioskikon.app",
   "build": {
-    "frontendDist": "../src"
+    "frontendDist": "../src",
+    "removeUnusedCommands": true
   },
   "app": {
     "withGlobalTauri": true,
