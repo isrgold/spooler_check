@@ -32,8 +32,8 @@ window.addEventListener("DOMContentLoaded", () => {
   document.addEventListener('contextmenu', (e) => e.preventDefault());
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
-  getRegistryValue();
-  listen_explorer();
   const out = document.getElementById('logout');
   out.addEventListener('click', handleLogout);
+  getRegistryValue();
+  listen_explorer();
 });
