@@ -16,16 +16,26 @@ import {
   Scale,
 } from "lucide-react";
 
-const IconButton = ({ Icon, label, color = "text-gray-800" }) => (
-  <div className="flex flex-col items-center">
-    <Button 
-    variant="outline" 
-    className={`w-14 h-14 rounded-full ${color}`}>
-      <Icon size={22} />
+const colorClasses = {
+  "gray-800": "border-gray-800 text-gray-800",
+  "red-600": "border-red-600 text-red-600",
+  "blue-400": "border-blue-400 text-blue-400",
+  // Add more as needed
+};
+
+
+const IconButton = ({ Icon, label, color = "gray-800" }) => {
+  const colorClass = colorClasses[color];
+  return (<div className="flex flex-col items-center">
+    <Button
+      variant="outline"
+      className={`w-36 h-36 rounded-full border-2 ${colorClass}`}>
+      <Icon strokeWidth={1.7} className="size-14" />
     </Button>
     <span className="mt-2 text-sm font-medium text-center">{label}</span>
-  </div>
-);
+  </div>)
+
+};
 
 export default function POSDashboard() {
   return (
@@ -46,9 +56,9 @@ export default function POSDashboard() {
         </div>
 
         <div className="grid grid-cols-3 gap-8 mb-8">
-          <IconButton Icon={CircleUser} label="Walk-Ins" />
-          <IconButton Icon={BookUser} label="Accounts" />
-          <IconButton Icon={Scale} label="Scale" />
+          <IconButton Icon={CircleUser} label="Walk-Ins" color="yellow-500" />
+          <IconButton Icon={BookUser} label="Accounts" color="yellow-500" />
+          <IconButton Icon={Scale} label="Scale" color="yellow-500" />
         </div>
 
         <div className="flex justify-center items-center gap-4 mb-6">
@@ -62,10 +72,10 @@ export default function POSDashboard() {
         </div>
 
         <div className="grid grid-cols-4 gap-6 mb-6">
-          <IconButton Icon={ClipboardList} label="Open Orders" color="text-red-600" />
-          <IconButton Icon={CheckCircle} label="Ready Orders" color="text-green-600" />
-          <IconButton Icon={Clock} label="Recent Orders" color="text-blue-600" />
-          <IconButton Icon={Activity} label="Steady Orders" color="text-purple-600" />
+          <IconButton Icon={ClipboardList} label="Open Orders" color="red-600" />
+          <IconButton Icon={CheckCircle} label="Ready Orders" color="green-600" />
+          <IconButton Icon={Clock} label="Recent Orders" color="blue-600" />
+          <IconButton Icon={Activity} label="Steady Orders" color="purple-600" />
         </div>
 
         <div className="flex justify-end">
