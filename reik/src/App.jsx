@@ -21,14 +21,14 @@ const colorClasses = {
 };
 
 
-const IconButton = ({ Icon, label, color, size = "w-36 h-36" }) => {
+const IconButton = ({ Icon, label, color, size = "w-36 h-36", className = "" }) => {
   const colorClass = colorClasses[color];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-min">
       <Button
         variant="outline"
-        className={`group ${size} rounded-full border-3 ${colorClass} flex flex-col items-center justify-center`}>
+        className={`group ${size} rounded-full border-3 ${colorClass} ${className}`}>
         <Icon className="size-16 transition-all duration-200 group-hover:w-[4.5rem] group-hover:h-[4.5rem]" />
       </Button>
       <span className="mt-1 text-base font-medium text-center text-red">{label}</span>
@@ -73,15 +73,9 @@ export default function POSDashboard() {
           <IconButton Icon={LuClock} label="Recent Orders" color="blue-600" />
           <IconButton Icon={LuCalendarFold} label="Steady Orders" color="purple-600" />
         </div>
-
-        <div className="flex justify-end">
-          <Button className="bg-yellow-500 text-white hover:bg-yellow-600">
-            Cash Drawer
-          </Button>
-        </div>
       </div>
 
-      <Sidebar />
+      <Sidebar IconButton={IconButton} />
     </div>
   );
 }
