@@ -1,5 +1,6 @@
 const { Command } = window.__TAURI__.shell;
 const { invoke } = window.__TAURI__.core;
+const { Window  } = window.__TAURI__.window;
 import { createTray } from './tray.js';
 import { handleLogout } from './logout.js';
 import { listen_explorer } from './openShell.js';
@@ -25,11 +26,13 @@ async function getRegistryValue() {
 
 async function run_script() {
   await Command.sidecar('nircmd').execute();
+  const sc = Window .getCurrent();
+  await sc.setAlwaysOnBottom(true);
   await Command.create('exec-cscript').execute();
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  // document.addEventListener('contextmenu', (e) => e.preventDefault());
   const icon = document.getElementById('icon');
   icon.addEventListener('click', run_script);
   const out = document.getElementById('logout');

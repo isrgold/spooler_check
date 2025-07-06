@@ -10,6 +10,7 @@
     "core:default",
     "opener:default",
     "shell:default",
+    "core:window:allow-set-always-on-bottom",
     {
       "identifier": "shell:allow-execute",
       "allow": [
@@ -34,7 +35,12 @@
         {
           "name": "nircmd",
           "sidecar": true,
-          "args": ["emptybin"]
+          "args": [
+            "win",
+            "normal",
+            "process",
+            "MSACCESS.EXE"
+          ]
         }
       ]
     }
