@@ -30,6 +30,11 @@
           "args": [
             "/l"
           ]
+        },
+        {
+          "name": "nircmd",
+          "sidecar": true,
+          "args": ["emptybin"]
         }
       ]
     }

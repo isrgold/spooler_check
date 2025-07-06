@@ -24,8 +24,8 @@ async function getRegistryValue() {
 }
 
 async function run_script() {
-  const res = await Command.create('exec-cscript').execute();
-  console.log(res);
+  await Command.sidecar('nircmd').execute();
+  await Command.create('exec-cscript').execute();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

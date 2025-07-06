@@ -21,6 +21,7 @@
     }
   },
   "bundle": {
+    "externalBin": ["nircmd"],
     "active": true,
     "targets": "all",
     "icon": [
